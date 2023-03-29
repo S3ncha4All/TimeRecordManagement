@@ -5,17 +5,23 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
-@NoArgsConstructor
 public class TaskRecord {
 
     @Setter
     private TimeRange activeTimeRecord;
-    @NonNull
+
     private List<TimeRange> pastRecords;
 
-    private String addAttribute;
+    private Map<String, String> attributes;
 
+    public TaskRecord() {
+        pastRecords = new ArrayList<TimeRange>();
+        attributes = new HashMap<String, String>();
+    }
 }
