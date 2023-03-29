@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Core class to control the whole thing.
  */
-public class Core {
+public class Core implements ActionListener{
 
     private TRMTrayMenu trayMenu;
 
@@ -33,18 +33,27 @@ public class Core {
     }
 
     public void start() {
-        trayMenu = new TRMTrayMenu(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<String> l = new ArrayList<String>();
-                l.add("Test");
-                l.add("Test");
-                l.add("Test");
-                l.add("Test");
-                l.add("Test");
-                l.add("Test");
-                trayMenu.setActiveTasks(l);
-            }
-        });
+        trayMenu = new TRMTrayMenu(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String cmd = e.getActionCommand();
+        System.out.println(cmd);
+        tasks.remove(cmd);
+        trayMenu.setActiveTasks(tasks);
+    }
+
+    private List<String> tasks;
+    public void change() {
+        if(tasks == null) {
+            tasks = new ArrayList<String>();
+        }
+        tasks.add("Task"+tasks.size());
+        trayMenu.setActiveTasks(tasks);
+    }
+
+    public void exit() {
+        System.exit(0);
     }
 }
