@@ -2,19 +2,20 @@ package de.s3ncha4all.trm.control;
 
 import de.s3ncha4all.trm.view.TaskDialog.CreateTaskDialog;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
+import de.s3ncha4all.trm.view.TaskDialog.NewTaskRecordEvent;
+import de.s3ncha4all.trm.view.eventmanagement.GenericEvent;
+import de.s3ncha4all.trm.view.eventmanagement.IGenericEventListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 /**
  * Core class to control the whole thing.
  */
-public class Core implements ActionListener{
-
-    public static final String NEWTASK_ADD = "add new task";
-    public static final String NEWTASK_CANCEL = "cancel adding new task";
+public class Core implements ActionListener, IGenericEventListener {
 
     private TRMTrayMenu trayMenu;
 
@@ -42,9 +43,8 @@ public class Core implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-        System.out.println(cmd);
-        tasks.remove(cmd);
-        trayMenu.setActiveTasks(tasks);
+//        tasks.remove(cmd);
+//        trayMenu.setActiveTasks(tasks);
     }
 
     private List<String> tasks;
@@ -58,5 +58,11 @@ public class Core implements ActionListener{
 
     public void exit() {
         System.exit(0);
+    }
+
+    @Override
+    public void genericEventFired(GenericEvent e) {
+        NewTaskRecordEvent nte = (NewTaskRecordEvent) e;
+        //TODO: ADD Task from Event via Worker to Current Record
     }
 }

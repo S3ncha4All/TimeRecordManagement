@@ -2,6 +2,7 @@ package de.s3ncha4all.trm.view.TaskDialog;
 
 import de.s3ncha4all.trm.control.Core;
 import de.s3ncha4all.trm.model.TaskRecord;
+import de.s3ncha4all.trm.view.eventmanagement.GenericEventRegistrar;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +16,11 @@ import java.util.Map;
 
 public class CreateTaskDialog extends JDialog implements ActionListener {
 
+    public static final String NEWTASK_ADD = "add new task";
+    public static final String NEWTASK_CANCEL = "cancel adding new task";
+
+    private GenericEventRegistrar eventRegistrar;
+
     private final JPanel panel;
     private final JTextField textField;
     private final JTable table;
@@ -23,7 +29,9 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
 
     public CreateTaskDialog(Core core) {
         setTitle("Neue Aufgabe");
+        eventRegistrar = new GenericEventRegistrar();
         this.core = core;
+        this.eventRegistrar.addGenericEventListener(this.core);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 200);
         setLocation(200, 200);
@@ -66,12 +74,12 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout(FlowLayout.RIGHT));
         JButton submit = new JButton("Hinzufügen");
-        submit.setActionCommand(Core.NEWTASK_ADD);
-        submit.addActionListener(core);
+        submit.setActionCommand(NEWTASK_ADD);
+        submit.addActionListener(this);
         south.add(submit);
         JButton cancel = new JButton("Abbrechen");
-        cancel.setActionCommand(Core.NEWTASK_CANCEL);
-        cancel.addActionListener(core);
+        cancel.setActionCommand(NEWTASK_CANCEL);
+        cancel.addActionListener(this);
         south.add(cancel);
         panel.add(south, BorderLayout.SOUTH);
 
@@ -116,12 +124,25 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         table.getCellEditor().cancelCellEditing();
-        if("add".equals(cmd)) {
-            model.addRow(new String[] {"", "", "", ""});
-        } else {
-            int index = Integer.parseInt(cmd);
-            if (index > 0)
-                model.removeRow(index);
+        switch (cmd) {
+            case NEWTASK_ADD:
+                String name = getTaskRecordName();
+                TaskRecord tr = getTaskRecord();
+                eventRegistrar.fireGenericEvent(new NewTaskRecordEvent(this, "NewTaskCreated", name, tr));
+                break;
+            case NEWTASK_CANCEL:
+                dispose();
+                break;
+            case "add":
+                model.addRow(new String[] {"", "", "", ""});
+                break;
+            default:
+                try {
+                    int index = Integer.parseInt(cmd);
+                    if (index > 0)
+                        model.removeRow(index);
+                } catch (NumberFormatException ne) {}
+                break;
         }
     }
 }
