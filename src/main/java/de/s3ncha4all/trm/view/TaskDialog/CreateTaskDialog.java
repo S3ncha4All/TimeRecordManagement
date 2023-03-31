@@ -88,6 +88,7 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
     }
 
     private String[] getAttributeNames() {
+        //TODO: Get actual AttributeNames from Core.TimeRecordReader
         return new String[] {"73gwb", "efwecfwe", "hsdsd"};
     }
 

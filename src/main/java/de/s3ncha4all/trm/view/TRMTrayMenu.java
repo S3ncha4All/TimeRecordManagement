@@ -1,6 +1,7 @@
 package de.s3ncha4all.trm.view;
 
 import de.s3ncha4all.trm.control.Core;
+import de.s3ncha4all.trm.view.TaskDialog.CreateTaskDialog;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -86,11 +87,13 @@ public class TRMTrayMenu implements ActionListener {
         String cmd = e.getActionCommand();
         switch(cmd) {
             case NEWTASK_COMMAND:
-                core.change();
+                new CreateTaskDialog(core);
                 break;
             case OVERVIEW_COMMAND:
+                //TODO: TBD
                 break;
             case SETTINGS_COMMAND:
+                //TODO: TBD
                 break;
             case EXIT_COMMAND:
                 core.exit();

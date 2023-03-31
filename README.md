@@ -19,4 +19,4 @@ TBD
 - Shortcut to Tasks
 - Workflow Operations (copy, paste, undo, redo)
 - General Options in seperate file(default File, etc.)
-
+- Multiple Language Support
