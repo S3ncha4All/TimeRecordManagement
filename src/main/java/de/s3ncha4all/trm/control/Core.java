@@ -1,6 +1,6 @@
 package de.s3ncha4all.trm.control;
 
-import de.s3ncha4all.trm.model.TimeRecord;
+import de.s3ncha4all.trm.view.TaskDialog.CreateTaskDialog;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
 
 import java.awt.event.ActionEvent;
@@ -13,15 +13,18 @@ import java.util.List;
  */
 public class Core implements ActionListener{
 
+    public static final String NEWTASK_ADD = "add new task";
+    public static final String NEWTASK_CANCEL = "cancel adding new task";
+
     private TRMTrayMenu trayMenu;
 
     public Core() {
-        
+        new CreateTaskDialog(this);
     }
 
     public void init() {
-        TimeRecord record = new TimeRecord();
-        TimeRecordWorker trw = new TimeRecordWorker(record);
+//        TimeRecord record = new TimeRecord();
+//        TimeRecordWorker trw = new TimeRecordWorker(record);
 
 //        TaskRecord t = trw.createTask();
 //        TimeRange range = trw.createTimeRangeNow();

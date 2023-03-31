@@ -24,4 +24,9 @@ public class TaskRecord {
         pastRecords = new ArrayList<TimeRange>();
         attributes = new HashMap<String, String>();
     }
+
+    public TaskRecord(Map<String, String> attributes) {
+        pastRecords = new ArrayList<TimeRange>();
+        this.attributes = attributes;
+    }
 }
