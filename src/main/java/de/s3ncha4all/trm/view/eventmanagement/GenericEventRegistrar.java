@@ -20,7 +20,7 @@ public class GenericEventRegistrar implements IGenericEventRegistrar {
     }
 
     public void fireGenericEvent(GenericEvent e) {
-        for(IGenericEventListener l : listeners) {
+        for (IGenericEventListener l : listeners) {
             l.genericEventFired(e);
         }
     }

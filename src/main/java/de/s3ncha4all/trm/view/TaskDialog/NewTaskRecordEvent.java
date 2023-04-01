@@ -13,5 +13,7 @@ public class NewTaskRecordEvent extends GenericEvent {
 
     public NewTaskRecordEvent(Object source, String name, String taskName, TaskRecord task) {
         super(source, name);
+        this.taskName = taskName;
+        this.taskRecord = task;
     }
 }

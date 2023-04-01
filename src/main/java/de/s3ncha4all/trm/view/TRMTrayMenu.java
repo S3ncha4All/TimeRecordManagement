@@ -19,8 +19,8 @@ public class TRMTrayMenu implements ActionListener {
 
     private final Core core;
     private final TrayIcon icon;
-    private ActionListener actionListener;
     private List<String> activeTasks;
+    private List<String> inactiveTasks;
 
     public TRMTrayMenu(Core core) {
         this.core = core;
@@ -41,32 +41,36 @@ public class TRMTrayMenu implements ActionListener {
 
     public void setActiveTasks(List<String> activeTasks) {
         this.activeTasks = activeTasks;
-        refreshMenu();
     }
 
-    private void refreshMenu() {
+    public void setInactiveTasks(List<String> inactiveTasks) {
+        this.inactiveTasks = inactiveTasks;
+    }
+
+    public void refreshMenu() {
         PopupMenu menu = new PopupMenu();
         addMenuItems(menu);
         icon.setPopupMenu(menu);
     }
 
     private void addMenuItems(PopupMenu menu) {
-        if(activeTasks != null) {
-            for(String s : activeTasks) {
-                MenuItem mi = new MenuItem(s+" abschließen");
-                mi.setActionCommand(s);
-                mi.addActionListener(core);
-                menu.add(mi);
-            }
-            if(activeTasks.size() > 0) {
-                menu.addSeparator();
-            }
-        }
         MenuItem item;
+        Menu submenu;
+        submenu = new Menu("Task beenden");
+        addActiveTasks(submenu);
+        menu.add(submenu);
+        menu.addSeparator();
+        item = new MenuItem("Neuen Task beginnen");
+//        item.setActionCommand(NEWTASK_COMMAND);
+//        item.addActionListener(this);
+        menu.add(item);
         item = new MenuItem("Neuen Task");
         item.setActionCommand(NEWTASK_COMMAND);
         item.addActionListener(this);
         menu.add(item);
+        submenu = new Menu("Task beginnen");
+        addInactiveTasks(submenu);
+        menu.add(submenu);
         menu.addSeparator();
         item = new MenuItem("Übersicht");
         item.setActionCommand(OVERVIEW_COMMAND);
@@ -80,6 +84,29 @@ public class TRMTrayMenu implements ActionListener {
         item.setActionCommand(EXIT_COMMAND);
         item.addActionListener(this);
         menu.add(item);
+    }
+
+    private void addInactiveTasks(Menu menu) {
+        if(inactiveTasks != null) {
+            for(String s : inactiveTasks) {
+                System.out.println(s);
+                MenuItem mi = new MenuItem(s+" beginnen");
+                mi.setActionCommand(s);
+                mi.addActionListener(this);
+                menu.add(mi);
+            }
+        }
+    }
+
+    private void addActiveTasks(Menu menu) {
+        if(activeTasks != null) {
+            for(String s : activeTasks) {
+                MenuItem mi = new MenuItem(s+" abschließen");
+                mi.setActionCommand(s);
+                mi.addActionListener(this);
+                menu.add(mi);
+            }
+        }
     }
 
     @Override
@@ -98,6 +125,10 @@ public class TRMTrayMenu implements ActionListener {
             case EXIT_COMMAND:
                 core.exit();
                 break;
+            default:
+                if(!cmd.isBlank() && !cmd.isEmpty()) {
+                    System.out.println(cmd);
+                }
         }
     }
 }

@@ -88,8 +88,12 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
     }
 
     private String[] getAttributeNames() {
-        //TODO: Get actual AttributeNames from Core.TimeRecordReader
-        return new String[] {"73gwb", "efwecfwe", "hsdsd"};
+        Object[] o = core.getReader().getAttributeNames().toArray();
+        String[] names = new String[o.length];
+        for(int i = 0; i<o.length; i++) {
+            names[i] = o[i].toString();
+        }
+        return names;
     }
 
     public void setTableDimensions() {
@@ -124,12 +128,15 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-        table.getCellEditor().cancelCellEditing();
+        if(table != null && table.getCellEditor() != null) {
+            table.getCellEditor().cancelCellEditing();
+        }
         switch (cmd) {
             case NEWTASK_ADD:
                 String name = getTaskRecordName();
                 TaskRecord tr = getTaskRecord();
                 eventRegistrar.fireGenericEvent(new NewTaskRecordEvent(this, "NewTaskCreated", name, tr));
+                dispose();
                 break;
             case NEWTASK_CANCEL:
                 dispose();
