@@ -6,11 +6,13 @@ TBD
 
 # Roadmap
 ## Basic Functionality:
-- File save/load
 - Datamodel for Tasks
 - TrayMenu
-- Simple Desktop Window
+
+## Advanced Functionality
 - Runnable Jar
+- File save/load
+- Simple Desktop Window
 
 ## Extended (Future) Functionality:
 - Status of Tasks
