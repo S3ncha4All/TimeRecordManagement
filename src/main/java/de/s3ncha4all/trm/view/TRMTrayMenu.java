@@ -13,6 +13,8 @@ import java.util.List;
 public class TRMTrayMenu implements ActionListener {
 
     public static final String NEWTASK_COMMAND = "newtask";
+    public static final String BEGINTASK_COMMAND = "BEGIN#";
+    public static final String ENDTASK_COMMAND = "END#";
     public static final String OVERVIEW_COMMAND = "overview";
     public static final String SETTINGS_COMMAND = "settings";
     public static final String EXIT_COMMAND = "exit";
@@ -91,7 +93,7 @@ public class TRMTrayMenu implements ActionListener {
             for(String s : inactiveTasks) {
                 System.out.println(s);
                 MenuItem mi = new MenuItem(s+" beginnen");
-                mi.setActionCommand(s);
+                mi.setActionCommand(BEGINTASK_COMMAND+s);
                 mi.addActionListener(this);
                 menu.add(mi);
             }
@@ -102,7 +104,7 @@ public class TRMTrayMenu implements ActionListener {
         if(activeTasks != null) {
             for(String s : activeTasks) {
                 MenuItem mi = new MenuItem(s+" abschließen");
-                mi.setActionCommand(s);
+                mi.setActionCommand(ENDTASK_COMMAND+s);
                 mi.addActionListener(this);
                 menu.add(mi);
             }
@@ -112,23 +114,29 @@ public class TRMTrayMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-        switch(cmd) {
-            case NEWTASK_COMMAND:
-                new CreateTaskDialog(core);
-                break;
-            case OVERVIEW_COMMAND:
-                //TODO: TBD
-                break;
-            case SETTINGS_COMMAND:
-                //TODO: TBD
-                break;
-            case EXIT_COMMAND:
-                core.exit();
-                break;
-            default:
-                if(!cmd.isBlank() && !cmd.isEmpty()) {
-                    System.out.println(cmd);
-                }
+        if(cmd.startsWith(BEGINTASK_COMMAND)) {
+            String taskName = cmd.replace(BEGINTASK_COMMAND, "");
+        } else if (cmd.startsWith(ENDTASK_COMMAND)) {
+            String taskName = cmd.replace(ENDTASK_COMMAND, "");
+        } else {
+            switch(cmd) {
+                case NEWTASK_COMMAND:
+                    new CreateTaskDialog(core);
+                    break;
+                case OVERVIEW_COMMAND:
+                    //TODO: TBD
+                    break;
+                case SETTINGS_COMMAND:
+                    //TODO: TBD
+                    break;
+                case EXIT_COMMAND:
+                    core.exit();
+                    break;
+                default:
+                    if(!cmd.isBlank() && !cmd.isEmpty()) {
+                        System.out.println(cmd);
+                    }
+            }
         }
     }
 }

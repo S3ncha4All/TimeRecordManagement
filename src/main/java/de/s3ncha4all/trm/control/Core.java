@@ -1,11 +1,8 @@
 package de.s3ncha4all.trm.control;
 
-import de.s3ncha4all.trm.model.TaskRecord;
-import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
-import de.s3ncha4all.trm.view.TaskDialog.CreateTaskDialog;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
-import de.s3ncha4all.trm.view.TaskDialog.NewTaskRecordEvent;
+import de.s3ncha4all.trm.control.events.NewTaskRecordEvent;
 import de.s3ncha4all.trm.view.TimeRecordReader;
 import de.s3ncha4all.trm.view.eventmanagement.GenericEvent;
 import de.s3ncha4all.trm.view.eventmanagement.IGenericEventListener;
@@ -16,6 +13,8 @@ import lombok.Getter;
  * Core class to control the whole thing.
  */
 public class Core implements IGenericEventListener {
+
+    public static final String CORE_NEW_TASK_RECORD_EVENT = "CREATE NEW TASK";
 
     @Getter
     private TimeRecordWorker worker;

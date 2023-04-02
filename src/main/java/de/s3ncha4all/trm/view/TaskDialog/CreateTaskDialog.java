@@ -1,6 +1,7 @@
 package de.s3ncha4all.trm.view.TaskDialog;
 
 import de.s3ncha4all.trm.control.Core;
+import de.s3ncha4all.trm.control.events.NewTaskRecordEvent;
 import de.s3ncha4all.trm.model.TaskRecord;
 import de.s3ncha4all.trm.view.eventmanagement.GenericEventRegistrar;
 
@@ -135,7 +136,7 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
             case NEWTASK_ADD:
                 String name = getTaskRecordName();
                 TaskRecord tr = getTaskRecord();
-                eventRegistrar.fireGenericEvent(new NewTaskRecordEvent(this, "NewTaskCreated", name, tr));
+                eventRegistrar.fireGenericEvent(new NewTaskRecordEvent(this, name, tr));
                 dispose();
                 break;
             case NEWTASK_CANCEL:
