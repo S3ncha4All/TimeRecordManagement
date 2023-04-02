@@ -1,7 +1,10 @@
 package de.s3ncha4all.trm.view;
 
 import de.s3ncha4all.trm.control.Core;
+import de.s3ncha4all.trm.control.events.BeginTaskTimeRangeEvent;
+import de.s3ncha4all.trm.control.events.EndTaskTimeRangeEvent;
 import de.s3ncha4all.trm.view.TaskDialog.CreateTaskDialog;
+import de.s3ncha4all.trm.view.eventmanagement.GenericEventRegistrar;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,12 +23,15 @@ public class TRMTrayMenu implements ActionListener {
     public static final String EXIT_COMMAND = "exit";
 
     private final Core core;
+    private GenericEventRegistrar eventRegistrar;
     private final TrayIcon icon;
     private List<String> activeTasks;
     private List<String> inactiveTasks;
 
     public TRMTrayMenu(Core core) {
         this.core = core;
+        eventRegistrar = new GenericEventRegistrar();
+        eventRegistrar.addGenericEventListener(this.core);
         try {
             PopupMenu menu = new PopupMenu();
             addMenuItems(menu);
@@ -63,8 +69,6 @@ public class TRMTrayMenu implements ActionListener {
         menu.add(submenu);
         menu.addSeparator();
         item = new MenuItem("Neuen Task beginnen");
-//        item.setActionCommand(NEWTASK_COMMAND);
-//        item.addActionListener(this);
         menu.add(item);
         item = new MenuItem("Neuen Task");
         item.setActionCommand(NEWTASK_COMMAND);
@@ -91,7 +95,6 @@ public class TRMTrayMenu implements ActionListener {
     private void addInactiveTasks(Menu menu) {
         if(inactiveTasks != null) {
             for(String s : inactiveTasks) {
-                System.out.println(s);
                 MenuItem mi = new MenuItem(s+" beginnen");
                 mi.setActionCommand(BEGINTASK_COMMAND+s);
                 mi.addActionListener(this);
@@ -116,8 +119,10 @@ public class TRMTrayMenu implements ActionListener {
         String cmd = e.getActionCommand();
         if(cmd.startsWith(BEGINTASK_COMMAND)) {
             String taskName = cmd.replace(BEGINTASK_COMMAND, "");
+            eventRegistrar.fireGenericEvent(new BeginTaskTimeRangeEvent(this, taskName));
         } else if (cmd.startsWith(ENDTASK_COMMAND)) {
             String taskName = cmd.replace(ENDTASK_COMMAND, "");
+            eventRegistrar.fireGenericEvent(new EndTaskTimeRangeEvent(this, taskName));
         } else {
             switch(cmd) {
                 case NEWTASK_COMMAND:

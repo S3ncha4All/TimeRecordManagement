@@ -32,6 +32,10 @@ public class TimeRecordWorker {
         record.getRecord().get(name).getPastRecords().add(range);
     }
 
+    public void startActiveTimeRange(String name) {
+        record.getRecord().get(name).setActiveTimeRecord(createTimeRangeNow());
+    }
+
     public void closeActiveTimeRange(String name) {
         TaskRecord task = record.getRecord().get(name);
         TimeRange range = task.getActiveTimeRecord();
