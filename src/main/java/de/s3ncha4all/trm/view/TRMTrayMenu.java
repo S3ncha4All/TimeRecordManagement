@@ -129,10 +129,10 @@ public class TRMTrayMenu implements ActionListener {
                     new CreateTaskDialog(core);
                     break;
                 case OVERVIEW_COMMAND:
-                    //TODO: TBD
+                    core.overview();
                     break;
                 case SETTINGS_COMMAND:
-                    //TODO: TBD
+                    core.settings();
                     break;
                 case EXIT_COMMAND:
                     core.exit();

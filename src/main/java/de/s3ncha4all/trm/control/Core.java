@@ -4,6 +4,7 @@ import de.s3ncha4all.trm.control.events.BeginTaskTimeRangeEvent;
 import de.s3ncha4all.trm.control.events.EndTaskTimeRangeEvent;
 import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
+import de.s3ncha4all.trm.view.OverviewWindow;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
 import de.s3ncha4all.trm.control.events.NewTaskRecordEvent;
 import de.s3ncha4all.trm.view.TimeRecordReader;
@@ -50,6 +51,14 @@ public class Core implements IGenericEventListener {
         trayMenu.setActiveTasks(reader.getActiveTaskNames().stream().toList());
         trayMenu.setInactiveTasks(reader.getInactiveTaskNames().stream().toList());
         trayMenu.refreshMenu();
+    }
+
+    public void overview() {
+        new OverviewWindow(this);
+    }
+
+    public void settings() {
+
     }
 
     public void exit() {

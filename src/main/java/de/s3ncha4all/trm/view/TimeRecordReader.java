@@ -1,7 +1,9 @@
 package de.s3ncha4all.trm.view;
 
+import de.s3ncha4all.trm.model.TaskRecord;
 import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
+import de.s3ncha4all.trm.view.overviewwindow.TimeTreeModel;
 import lombok.AllArgsConstructor;
 
 import java.util.HashSet;
@@ -46,5 +48,15 @@ public class TimeRecordReader {
             }
         }
         return inactiveTasks;
+    }
+
+    public TimeTreeModel createTimeTreeModel() {
+        TimeTreeModel ttm = new TimeTreeModel();
+        Set<String> tasks = record.getRecord().keySet();
+        for (String name : tasks) {
+            TaskRecord tr = record.getRecord().get(name);
+
+        }
+        return ttm;
     }
 }
