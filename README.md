@@ -12,7 +12,8 @@ TBD
 ## Advanced Functionality
 - Runnable Jar
 - File save/load
-- Simple Desktop Window
+- Overview Window
+- Settings Window
 
 ## Extended (Future) Functionality:
 - Status of Tasks
