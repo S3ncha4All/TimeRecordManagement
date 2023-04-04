@@ -1,8 +1,16 @@
 package de.s3ncha4all.trm.view.overviewwindow.model;
 
+import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeTaskRecord;
+
 import javax.swing.table.AbstractTableModel;
 
 public class TreeTaskRecordTableModel extends AbstractTableModel {
+
+    private TreeTaskRecord task;
+
+    public TreeTaskRecordTableModel(TreeTaskRecord task) {
+        this.task = task;
+    }
 
     @Override
     public int getRowCount() {

@@ -1,5 +1,7 @@
 package de.s3ncha4all.trm.view.overviewwindow;
 
+import de.s3ncha4all.trm.view.overviewwindow.model.TreeDayTableModel;
+import de.s3ncha4all.trm.view.overviewwindow.model.TreeTaskRecordTableModel;
 import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeDay;
 import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeTaskRecord;
 
@@ -21,11 +23,9 @@ public class TimeTreeSelectionListener implements TreeSelectionListener {
         if(source instanceof JTree tree) {
             Object node = tree.getLastSelectedPathComponent();
             if (node instanceof TreeTaskRecord record) {
-                System.out.println("LEAF");
-
+                table.setModel(new TreeTaskRecordTableModel(record));
             } else if (node instanceof TreeDay day) {
-                System.out.println("LEAF");
-
+                table.setModel(new TreeDayTableModel(day));
             }
         }
     }

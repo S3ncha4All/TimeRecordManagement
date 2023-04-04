@@ -1,8 +1,8 @@
 package de.s3ncha4all.trm.view;
 
 import de.s3ncha4all.trm.control.Core;
+import de.s3ncha4all.trm.view.overviewwindow.TimeTreeSelectionListener;
 import de.s3ncha4all.trm.view.overviewwindow.model.tree.TimeTreeModel;
-import de.s3ncha4all.trm.view.overviewwindow.model.TimeTreeSelectionListener;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
