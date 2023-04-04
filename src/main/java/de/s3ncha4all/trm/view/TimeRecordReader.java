@@ -4,8 +4,12 @@ import de.s3ncha4all.trm.model.TaskRecord;
 import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
 import de.s3ncha4all.trm.view.overviewwindow.TimeTreeModel;
+import de.s3ncha4all.trm.view.overviewwindow.TreeDay;
+import de.s3ncha4all.trm.view.overviewwindow.TreeTaskRecord;
 import lombok.AllArgsConstructor;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,9 +58,43 @@ public class TimeRecordReader {
         TimeTreeModel ttm = new TimeTreeModel();
         Set<String> tasks = record.getRecord().keySet();
         for (String name : tasks) {
+            System.out.println("Name: "+name);
             TaskRecord tr = record.getRecord().get(name);
-
+            if((tr.getPastRecords().size() == 0 && tr.getActiveTimeRecord() == null)
+                    || (tr.getActiveTimeRecord() != null && tr.getActiveTimeRecord().getEnd() == null)) {
+                // Zu aktiven Tasks hinzufügen
+                TreeTaskRecord ttr = new TreeTaskRecord(name, tr.getActiveTimeRecord(), tr.getAttributes());
+                ttm.addActiveTaskRecord(ttr);
+            }
+            for(TimeRange range : tr.getPastRecords()) {
+                Timestamp ts = range.getBegin();
+                System.out.println("Begin: "+ts);
+                int year = getYear(ts);
+                System.out.println("Jahr: "+year);
+                int week = getWeekNumber(ts);
+                System.out.println("Woche: "+week);
+                TreeDay td = ttm.getDay(year, week, ts);
+                td.getTasks().add(new TreeTaskRecord(name, range, tr.getAttributes()));
+            }
         }
         return ttm;
     }
+
+    private Calendar getTimestampCalendar(Timestamp ts) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ts);
+        return calendar;
+    }
+
+    private int getYear(Timestamp ts) {
+        Calendar calendar = getTimestampCalendar(ts);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    private int getWeekNumber(Timestamp ts) {
+        Calendar calendar = getTimestampCalendar(ts);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+
 }

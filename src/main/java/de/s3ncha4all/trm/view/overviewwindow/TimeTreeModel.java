@@ -6,6 +6,7 @@ import de.s3ncha4all.trm.model.TaskRecord;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class TimeTreeModel implements TreeModel {
         tw.getDays().add(day);
     }
 
-    public TreeDay getDay(int year, int week, LocalDate date) {
+    public TreeDay getDay(int year, int week, Timestamp date) {
         TreeWeek tw = getTreeWeek(year, week);
         for(TreeDay td : tw.getDays()) {
             if(date.equals(td.getDate())) {
@@ -71,6 +72,10 @@ public class TimeTreeModel implements TreeModel {
         TreeDay td = new TreeDay(date);
         tw.getDays().add(td);
         return td;
+    }
+
+    public void addActiveTaskRecord(TreeTaskRecord ttr) {
+        activeTasks.add(ttr);
     }
 
     @Override
@@ -99,9 +104,10 @@ public class TimeTreeModel implements TreeModel {
             } else if(ACTIVE_TASKS.equals(s)) {
                 return activeTasks.get(index);
             } else if(HISTORY.equals(s)) {
-                years.get(index);
+                return years.get(index);
             }
         }
+
         return null;
     }
 
@@ -117,12 +123,16 @@ public class TimeTreeModel implements TreeModel {
         }
         if(parent instanceof String) {
             String s = parent.toString();
-            if(TASKS.equals(s)) {
-                return 2;
-            } else if(ACTIVE_TASKS.equals(s)) {
-                return activeTasks.size();
-            } else if(HISTORY.equals(s)) {
-                years.size();
+            switch (s) {
+                case TASKS -> {
+                    return 2;
+                }
+                case ACTIVE_TASKS -> {
+                    return activeTasks.size();
+                }
+                case HISTORY -> {
+                    return years.size();
+                }
             }
         }
         return 0;

@@ -2,6 +2,7 @@ package de.s3ncha4all.trm.view.overviewwindow;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,10 +14,11 @@ public class TreeYear {
 
     public TreeYear(int year) {
         this.year = year;
+        weeks = new ArrayList<TreeWeek>();
     }
 
     @Override
     public String toString() {
-        return ""+year;
+        return String.valueOf(year);
     }
 }
