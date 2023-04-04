@@ -3,15 +3,14 @@ package de.s3ncha4all.trm.view;
 import de.s3ncha4all.trm.model.TaskRecord;
 import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
-import de.s3ncha4all.trm.view.overviewwindow.TimeTreeModel;
-import de.s3ncha4all.trm.view.overviewwindow.TreeDay;
-import de.s3ncha4all.trm.view.overviewwindow.TreeTaskRecord;
+import de.s3ncha4all.trm.view.overviewwindow.model.tree.TimeTreeModel;
+import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeDay;
+import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeTaskRecord;
 import lombok.AllArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 

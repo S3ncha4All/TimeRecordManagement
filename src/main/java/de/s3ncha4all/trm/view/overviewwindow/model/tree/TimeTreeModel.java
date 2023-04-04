@@ -1,13 +1,9 @@
-package de.s3ncha4all.trm.view.overviewwindow;
-
-import com.sun.source.tree.Tree;
-import de.s3ncha4all.trm.model.TaskRecord;
+package de.s3ncha4all.trm.view.overviewwindow.model.tree;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

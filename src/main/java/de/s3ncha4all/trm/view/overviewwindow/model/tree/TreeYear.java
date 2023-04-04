@@ -1,5 +1,6 @@
-package de.s3ncha4all.trm.view.overviewwindow;
+package de.s3ncha4all.trm.view.overviewwindow.model.tree;
 
+import de.s3ncha4all.trm.view.overviewwindow.model.tree.TreeWeek;
 import lombok.Getter;
 
 import java.util.ArrayList;
