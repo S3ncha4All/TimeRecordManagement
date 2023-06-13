@@ -1,6 +1,7 @@
 package de.s3ncha4all.trm.view.TaskDialog;
 
 import de.s3ncha4all.trm.control.Core;
+import de.s3ncha4all.trm.control.events.BeginTaskTimeRangeEvent;
 import de.s3ncha4all.trm.control.events.NewTaskRecordEvent;
 import de.s3ncha4all.trm.model.TaskRecord;
 import de.s3ncha4all.trm.view.eventmanagement.GenericEventRegistrar;
@@ -19,6 +20,7 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
 
     public static final String NEWTASK_ADD = "add new task";
     public static final String NEWTASK_CANCEL = "cancel adding new task";
+    private boolean activateRightAway;
 
     private GenericEventRegistrar eventRegistrar;
 
@@ -29,9 +31,14 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
     private final Core core;
 
     public CreateTaskDialog(Core core) {
+        this(core, false);
+    }
+
+    public CreateTaskDialog (Core core, boolean activateRightAway) {
         setTitle("Neue Aufgabe");
         eventRegistrar = new GenericEventRegistrar();
         this.core = core;
+        this.activateRightAway = activateRightAway;
         this.eventRegistrar.addGenericEventListener(this.core);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 200);
@@ -74,7 +81,11 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
 
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        JButton submit = new JButton("Hinzufügen");
+        String submitText = "Hinzufügen";
+        if(activateRightAway) {
+            submitText = "Starten";
+        }
+        JButton submit = new JButton(submitText);
         submit.setActionCommand(NEWTASK_ADD);
         submit.addActionListener(this);
         south.add(submit);
@@ -133,25 +144,25 @@ public class CreateTaskDialog extends JDialog implements ActionListener {
             table.getCellEditor().cancelCellEditing();
         }
         switch (cmd) {
-            case NEWTASK_ADD:
+            case NEWTASK_ADD -> {
                 String name = getTaskRecordName();
                 TaskRecord tr = getTaskRecord();
                 eventRegistrar.fireGenericEvent(new NewTaskRecordEvent(this, name, tr));
+                if (activateRightAway) {
+                    eventRegistrar.fireGenericEvent(new BeginTaskTimeRangeEvent(this, name));
+                }
                 dispose();
-                break;
-            case NEWTASK_CANCEL:
-                dispose();
-                break;
-            case "add":
-                model.addRow(new String[] {"", "", "", ""});
-                break;
-            default:
+            }
+            case NEWTASK_CANCEL -> dispose();
+            case "add" -> model.addRow(new String[]{"", "", "", ""});
+            default -> {
                 try {
                     int index = Integer.parseInt(cmd);
                     if (index > 0)
                         model.removeRow(index);
-                } catch (NumberFormatException ne) {}
-                break;
+                } catch (NumberFormatException ignored) {
+                }
+            }
         }
     }
 }

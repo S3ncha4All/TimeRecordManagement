@@ -16,6 +16,7 @@ import java.util.List;
 public class TRMTrayMenu implements ActionListener {
 
     public static final String NEWTASK_COMMAND = "newtask";
+    public static final String BEGIN_NEWTASK_COMMAND = "begin_newtask";
     public static final String BEGINTASK_COMMAND = "BEGIN#";
     public static final String ENDTASK_COMMAND = "END#";
     public static final String OVERVIEW_COMMAND = "overview";
@@ -69,6 +70,8 @@ public class TRMTrayMenu implements ActionListener {
         menu.add(submenu);
         menu.addSeparator();
         item = new MenuItem("Neuen Task beginnen");
+        item.setActionCommand(BEGIN_NEWTASK_COMMAND);
+        item.addActionListener(this);
         menu.add(item);
         item = new MenuItem("Neuen Task");
         item.setActionCommand(NEWTASK_COMMAND);
@@ -127,6 +130,9 @@ public class TRMTrayMenu implements ActionListener {
             switch(cmd) {
                 case NEWTASK_COMMAND:
                     new CreateTaskDialog(core);
+                    break;
+                case BEGIN_NEWTASK_COMMAND:
+                    new CreateTaskDialog(core, true);
                     break;
                 case OVERVIEW_COMMAND:
                     core.overview();

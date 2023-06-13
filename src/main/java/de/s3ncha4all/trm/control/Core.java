@@ -2,7 +2,6 @@ package de.s3ncha4all.trm.control;
 
 import de.s3ncha4all.trm.control.events.BeginTaskTimeRangeEvent;
 import de.s3ncha4all.trm.control.events.EndTaskTimeRangeEvent;
-import de.s3ncha4all.trm.model.TimeRange;
 import de.s3ncha4all.trm.model.TimeRecord;
 import de.s3ncha4all.trm.view.OverviewWindow;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
@@ -67,7 +66,9 @@ public class Core implements IGenericEventListener {
 
     @Override
     public void genericEventFired(GenericEvent ge) {
-        switch(ge.getName()) {
+        String name = ge.getName();
+        System.out.println(name);
+        switch(name) {
             case CORE_NEW_TASK_RECORD_EVENT:
                 NewTaskRecordEvent ntr = (NewTaskRecordEvent) ge;
                 worker.addTask(ntr.getTaskName(), ntr.getTaskRecord());

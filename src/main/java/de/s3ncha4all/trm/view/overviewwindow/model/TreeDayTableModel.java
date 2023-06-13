@@ -14,7 +14,7 @@ public class TreeDayTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return 0;
+        return day.getTasks().size();
     }
 
     @Override
@@ -23,7 +23,12 @@ public class TreeDayTableModel extends AbstractTableModel {
     }
 
     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
+        return "";
     }
 }
