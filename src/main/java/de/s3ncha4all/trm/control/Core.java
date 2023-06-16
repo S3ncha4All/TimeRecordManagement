@@ -3,6 +3,7 @@ package de.s3ncha4all.trm.control;
 import de.s3ncha4all.trm.control.events.BeginTaskTimeRangeEvent;
 import de.s3ncha4all.trm.control.events.EndTaskTimeRangeEvent;
 import de.s3ncha4all.trm.model.TimeRecord;
+import de.s3ncha4all.trm.shared.GlobalConstants;
 import de.s3ncha4all.trm.view.OverviewWindow;
 import de.s3ncha4all.trm.view.TRMTrayMenu;
 import de.s3ncha4all.trm.control.events.NewTaskRecordEvent;
@@ -16,10 +17,6 @@ import lombok.Getter;
  * Core class to control the whole thing.
  */
 public class Core implements IGenericEventListener {
-
-    public static final String CORE_NEW_TASK_RECORD_EVENT = "CREATE NEW TASK";
-    public static final String CORE_BEGIN_TASK_TIME_RANGE_EVENT = "BEGIN TASK TIME RANGE";
-    public static final String CORE_END_TASK_TIME_RANGE_EVENT = "END TASK TIME RANGE";
 
     @Getter
     private TimeRecordWorker worker;
@@ -69,15 +66,15 @@ public class Core implements IGenericEventListener {
         String name = ge.getName();
         System.out.println(name);
         switch(name) {
-            case CORE_NEW_TASK_RECORD_EVENT:
+            case GlobalConstants.NEW_TASK_EVENT:
                 NewTaskRecordEvent ntr = (NewTaskRecordEvent) ge;
                 worker.addTask(ntr.getTaskName(), ntr.getTaskRecord());
                 break;
-            case CORE_BEGIN_TASK_TIME_RANGE_EVENT:
+            case GlobalConstants.BEGIN_TASK_EVENT:
                 BeginTaskTimeRangeEvent btt = (BeginTaskTimeRangeEvent) ge;
                 worker.startActiveTimeRange(btt.getTaskName());
                 break;
-            case CORE_END_TASK_TIME_RANGE_EVENT:
+            case GlobalConstants.END_TASK_EVENT:
                 EndTaskTimeRangeEvent ett = (EndTaskTimeRangeEvent) ge;
                 worker.closeActiveTimeRange(ett.getTaskName());
                 break;
